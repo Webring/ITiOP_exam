@@ -29,14 +29,14 @@ void print_list(ListElement *first_element) { //Функция вывода сп
     cout << "+amount: " << total_amount << endl; //Печатаем количество
 }
 
-void reverse_recursion_print_list(ListElement *element) {
-    if (element == nullptr) {
+void reverse_recursion_print_list(ListElement *element) { // Рекурсивный вывод списка в обратном порядке
+    if (element == nullptr) { // Базовый случай рекурсии (Если список кончился)
         return;
     }
 
-    reverse_recursion_print_list(element->next);
+    reverse_recursion_print_list(element->next); // Вызываем эту же функцию
 
-    cout << "| " << element->value << endl;
+    cout << "| " << element->value << endl; // Печатаем элемент
 }
 
 bool file_is_empty(ifstream &file) { // Проверка файла на пустоту
