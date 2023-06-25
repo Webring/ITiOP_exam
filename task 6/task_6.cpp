@@ -1,115 +1,115 @@
 /*
  * Task 6:
- * В текстовом файле дана последовательность чисел.
- * Написать подпрограмму, которая в однонаправленном списке оставляет
- * только последнее вхождение заданного элемента.
- * Используя эту подпрограмму, преобразовать заданную последовательность
+ * Р’ С‚РµРєСЃС‚РѕРІРѕРј С„Р°Р№Р»Рµ РґР°РЅР° РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ С‡РёСЃРµР».
+ * РќР°РїРёСЃР°С‚СЊ РїРѕРґРїСЂРѕРіСЂР°РјРјСѓ, РєРѕС‚РѕСЂР°СЏ РІ РѕРґРЅРѕРЅР°РїСЂР°РІР»РµРЅРЅРѕРј СЃРїРёСЃРєРµ РѕСЃС‚Р°РІР»СЏРµС‚
+ * С‚РѕР»СЊРєРѕ РїРѕСЃР»РµРґРЅРµРµ РІС…РѕР¶РґРµРЅРёРµ Р·Р°РґР°РЅРЅРѕРіРѕ СЌР»РµРјРµРЅС‚Р°.
+ * РСЃРїРѕР»СЊР·СѓСЏ СЌС‚Сѓ РїРѕРґРїСЂРѕРіСЂР°РјРјСѓ, РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ Р·Р°РґР°РЅРЅСѓСЋ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕСЃС‚СЊ
  * */
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 6/numbers.txt" // Имя входного файла
-#define DELETE_FAILED 0 // костанта состояния для удаления элемента
-#define VALUE_NOT_FOUND -1 // костанта состояния для удаления элемента
+#define INPUT_FILE_PATH "../task 6/numbers.txt" // РРјСЏ РІС…РѕРґРЅРѕРіРѕ С„Р°Р№Р»Р°
+#define DELETE_FAILED 0 // РєРѕСЃС‚Р°РЅС‚Р° СЃРѕСЃС‚РѕСЏРЅРёСЏ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р°
+#define VALUE_NOT_FOUND -1 // РєРѕСЃС‚Р°РЅС‚Р° СЃРѕСЃС‚РѕСЏРЅРёСЏ РґР»СЏ СѓРґР°Р»РµРЅРёСЏ СЌР»РµРјРµРЅС‚Р°
 
-using namespace std; //Подключаем пространство имен
+using namespace std; //РџРѕРґРєР»СЋС‡Р°РµРј РїСЂРѕСЃС‚СЂР°РЅСЃС‚РІРѕ РёРјРµРЅ
 
-struct ListElement { // Структура для элемента списка
-    int value; // значение
-    ListElement *next = NULL; // указатель на следующий элемент
+struct ListElement { // РЎС‚СЂСѓРєС‚СѓСЂР° РґР»СЏ СЌР»РµРјРµРЅС‚Р° СЃРїРёСЃРєР°
+    int value; // Р·РЅР°С‡РµРЅРёРµ
+    ListElement *next = NULL; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
 };
 
-void print_list(ListElement *first_element) { //Функция вывода списка на экран
-    ListElement *iter_element = first_element->next; // Создаем указатель и выделяем под данные память
-    int total_amount = 0; // Количество элементов в списке
-    while (iter_element != NULL) { //ПОка не кончится список
-        cout << "| " << iter_element->value << endl; // Выводим на экран элемент
-        total_amount++; // Увеличиваем число элментов на один
-        iter_element = iter_element->next; //Переходим на след элмент
+void print_list(ListElement *first_element) { //Р¤СѓРЅРєС†РёСЏ РІС‹РІРѕРґР° СЃРїРёСЃРєР° РЅР° СЌРєСЂР°РЅ
+    ListElement *iter_element = first_element->next; // РЎРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ Рё РІС‹РґРµР»СЏРµРј РїРѕРґ РґР°РЅРЅС‹Рµ РїР°РјСЏС‚СЊ
+    int total_amount = 0; // РљРѕР»РёС‡РµСЃС‚РІРѕ СЌР»РµРјРµРЅС‚РѕРІ РІ СЃРїРёСЃРєРµ
+    while (iter_element != NULL) { //РџРћРєР° РЅРµ РєРѕРЅС‡РёС‚СЃСЏ СЃРїРёСЃРѕРє
+        cout << "| " << iter_element->value << endl; // Р’С‹РІРѕРґРёРј РЅР° СЌРєСЂР°РЅ СЌР»РµРјРµРЅС‚
+        total_amount++; // РЈРІРµР»РёС‡РёРІР°РµРј С‡РёСЃР»Рѕ СЌР»РјРµРЅС‚РѕРІ РЅР° РѕРґРёРЅ
+        iter_element = iter_element->next; //РџРµСЂРµС…РѕРґРёРј РЅР° СЃР»РµРґ СЌР»РјРµРЅС‚
     }
-    cout << "+amount: " << total_amount << endl; //Печатаем количество
+    cout << "+amount: " << total_amount << endl; //РџРµС‡Р°С‚Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ
 }
 
-ListElement *find_last_element_with_value(ListElement *first_element, int value) { //Функция поиска последнего вхождения элемента в список
-    ListElement *iter_element = first_element; // Создаем указатель и выделяем под данные память
-    ListElement *answer_element_pointer = NULL;// Создаем указатель для элемента ответа и выделяем под данные память
-    while (iter_element != NULL) { //ПОка не кончится список
-        if (iter_element->value == value) { //ПРоверяем тот ли элемент, что ищем
-            answer_element_pointer = iter_element; //Записываем указатель в переменную
+ListElement *find_last_element_with_value(ListElement *first_element, int value) { //Р¤СѓРЅРєС†РёСЏ РїРѕРёСЃРєР° РїРѕСЃР»РµРґРЅРµРіРѕ РІС…РѕР¶РґРµРЅРёСЏ СЌР»РµРјРµРЅС‚Р° РІ СЃРїРёСЃРѕРє
+    ListElement *iter_element = first_element; // РЎРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ Рё РІС‹РґРµР»СЏРµРј РїРѕРґ РґР°РЅРЅС‹Рµ РїР°РјСЏС‚СЊ
+    ListElement *answer_element_pointer = NULL;// РЎРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РґР»СЏ СЌР»РµРјРµРЅС‚Р° РѕС‚РІРµС‚Р° Рё РІС‹РґРµР»СЏРµРј РїРѕРґ РґР°РЅРЅС‹Рµ РїР°РјСЏС‚СЊ
+    while (iter_element != NULL) { //РџРћРєР° РЅРµ РєРѕРЅС‡РёС‚СЃСЏ СЃРїРёСЃРѕРє
+        if (iter_element->value == value) { //РџР РѕРІРµСЂСЏРµРј С‚РѕС‚ Р»Рё СЌР»РµРјРµРЅС‚, С‡С‚Рѕ РёС‰РµРј
+            answer_element_pointer = iter_element; //Р—Р°РїРёСЃС‹РІР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РІ РїРµСЂРµРјРµРЅРЅСѓСЋ
         }
-        iter_element = iter_element->next;//Переходим на след элмент
+        iter_element = iter_element->next;//РџРµСЂРµС…РѕРґРёРј РЅР° СЃР»РµРґ СЌР»РјРµРЅС‚
     }
-    return answer_element_pointer; // ВОзвращаем ответ
+    return answer_element_pointer; // Р’РћР·РІСЂР°С‰Р°РµРј РѕС‚РІРµС‚
 }
 
-int delete_not_last_elements(ListElement *first_element, int value) { // Функция удаления не последних вхождений
-    ListElement *last_element = find_last_element_with_value(first_element, value); //Получаем номер полсденего вхождения
+int delete_not_last_elements(ListElement *first_element, int value) { // Р¤СѓРЅРєС†РёСЏ СѓРґР°Р»РµРЅРёСЏ РЅРµ РїРѕСЃР»РµРґРЅРёС… РІС…РѕР¶РґРµРЅРёР№
+    ListElement *last_element = find_last_element_with_value(first_element, value); //РџРѕР»СѓС‡Р°РµРј РЅРѕРјРµСЂ РїРѕР»СЃРґРµРЅРµРіРѕ РІС…РѕР¶РґРµРЅРёСЏ
 
-    if (last_element == NULL) { // Проверяем, что такое число в списке есть
-        return VALUE_NOT_FOUND; // Возвращаем ошибку
+    if (last_element == NULL) { // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ С‚Р°РєРѕРµ С‡РёСЃР»Рѕ РІ СЃРїРёСЃРєРµ РµСЃС‚СЊ
+        return VALUE_NOT_FOUND; // Р’РѕР·РІСЂР°С‰Р°РµРј РѕС€РёР±РєСѓ
     }
 
-    int number_of_deleted_values = 0; //Количество удаленых элементов
+    int number_of_deleted_values = 0; //РљРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°Р»РµРЅС‹С… СЌР»РµРјРµРЅС‚РѕРІ
 
-    ListElement *iter_element = first_element;// Создаем указатель и выделяем под данные память
-    ListElement *temp_element; // указатель на удаляемый элемнт
-    while (iter_element->next != NULL) {//ПОка не кончится список
-        if (iter_element->next->value == value and iter_element->next != last_element) { //Если нашли не последнее вхождение
-            temp_element = iter_element->next; //Запоминаем элемент
-            iter_element->next = iter_element->next->next; // Меняем связи в списке
-            delete temp_element; // Удаляем элемент
+    ListElement *iter_element = first_element;// РЎРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ Рё РІС‹РґРµР»СЏРµРј РїРѕРґ РґР°РЅРЅС‹Рµ РїР°РјСЏС‚СЊ
+    ListElement *temp_element; // СѓРєР°Р·Р°С‚РµР»СЊ РЅР° СѓРґР°Р»СЏРµРјС‹Р№ СЌР»РµРјРЅС‚
+    while (iter_element->next != NULL) {//РџРћРєР° РЅРµ РєРѕРЅС‡РёС‚СЃСЏ СЃРїРёСЃРѕРє
+        if (iter_element->next->value == value and iter_element->next != last_element) { //Р•СЃР»Рё РЅР°С€Р»Рё РЅРµ РїРѕСЃР»РµРґРЅРµРµ РІС…РѕР¶РґРµРЅРёРµ
+            temp_element = iter_element->next; //Р—Р°РїРѕРјРёРЅР°РµРј СЌР»РµРјРµРЅС‚
+            iter_element->next = iter_element->next->next; // РњРµРЅСЏРµРј СЃРІСЏР·Рё РІ СЃРїРёСЃРєРµ
+            delete temp_element; // РЈРґР°Р»СЏРµРј СЌР»РµРјРµРЅС‚
 
-            number_of_deleted_values++; // Увеличиваем количество
+            number_of_deleted_values++; // РЈРІРµР»РёС‡РёРІР°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ
         } else {
-            iter_element = iter_element->next; // переходим на следующий элемент
+            iter_element = iter_element->next; // РїРµСЂРµС…РѕРґРёРј РЅР° СЃР»РµРґСѓСЋС‰РёР№ СЌР»РµРјРµРЅС‚
         }
     }
 
-    return number_of_deleted_values; // ВОзвращаем количество удаленых элментов
+    return number_of_deleted_values; // Р’РћР·РІСЂР°С‰Р°РµРј РєРѕР»РёС‡РµСЃС‚РІРѕ СѓРґР°Р»РµРЅС‹С… СЌР»РјРµРЅС‚РѕРІ
 }
 
 int main() {
-    ifstream input_file(INPUT_FILE_PATH); // открываем файл для чтения
+    ifstream input_file(INPUT_FILE_PATH); // РѕС‚РєСЂС‹РІР°РµРј С„Р°Р№Р» РґР»СЏ С‡С‚РµРЅРёСЏ
 
-    if (not input_file.is_open()) { // Если файл не открыт
-        cout << "Can't open input file" << endl; //Выводим сообщение об ошибке
-        return 0; // Завершаем работу программы
+    if (not input_file.is_open()) { // Р•СЃР»Рё С„Р°Р№Р» РЅРµ РѕС‚РєСЂС‹С‚
+        cout << "Can't open input file" << endl; //Р’С‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
+        return 0; // Р—Р°РІРµСЂС€Р°РµРј СЂР°Р±РѕС‚Сѓ РїСЂРѕРіСЂР°РјРјС‹
     }
 
-    if (input_file.peek() == ifstream::traits_type::eof()) { // Проверяем файл на пустоту
-        cout << "file is empty" << endl; //Выводим сообщение об ошибке
-        return 0; // Завершаем работу программы
+    if (input_file.peek() == ifstream::traits_type::eof()) { // РџСЂРѕРІРµСЂСЏРµРј С„Р°Р№Р» РЅР° РїСѓСЃС‚РѕС‚Сѓ
+        cout << "file is empty" << endl; //Р’С‹РІРѕРґРёРј СЃРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ
+        return 0; // Р—Р°РІРµСЂС€Р°РµРј СЂР°Р±РѕС‚Сѓ РїСЂРѕРіСЂР°РјРјС‹
     }
 
-    ListElement *first_element, *iter_element; // Создаем указатели на элементы списка: Начало списка и элемент для перебора
-    first_element = iter_element = new ListElement; // Выделяем под них память
+    ListElement *first_element, *iter_element; // РЎРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»Рё РЅР° СЌР»РµРјРµРЅС‚С‹ СЃРїРёСЃРєР°: РќР°С‡Р°Р»Рѕ СЃРїРёСЃРєР° Рё СЌР»РµРјРµРЅС‚ РґР»СЏ РїРµСЂРµР±РѕСЂР°
+    first_element = iter_element = new ListElement; // Р’С‹РґРµР»СЏРµРј РїРѕРґ РЅРёС… РїР°РјСЏС‚СЊ
 
 
 
-    while (not input_file.eof()) { // Читаем файл до тех пор, пока он не закончится
-        ListElement *new_element = new ListElement; // создаем указатель на новый элемент и  выделяем под него память
-        input_file >> new_element->value; // Читаем из файла новое значение и записываем ее в структуру
-        iter_element->next = new_element; // добавляем элемент в список
+    while (not input_file.eof()) { // Р§РёС‚Р°РµРј С„Р°Р№Р» РґРѕ С‚РµС… РїРѕСЂ, РїРѕРєР° РѕРЅ РЅРµ Р·Р°РєРѕРЅС‡РёС‚СЃСЏ
+        ListElement *new_element = new ListElement; // СЃРѕР·РґР°РµРј СѓРєР°Р·Р°С‚РµР»СЊ РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚ Рё  РІС‹РґРµР»СЏРµРј РїРѕРґ РЅРµРіРѕ РїР°РјСЏС‚СЊ
+        input_file >> new_element->value; // Р§РёС‚Р°РµРј РёР· С„Р°Р№Р»Р° РЅРѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ Рё Р·Р°РїРёСЃС‹РІР°РµРј РµРµ РІ СЃС‚СЂСѓРєС‚СѓСЂСѓ
+        iter_element->next = new_element; // РґРѕР±Р°РІР»СЏРµРј СЌР»РµРјРµРЅС‚ РІ СЃРїРёСЃРѕРє
 
-        iter_element = iter_element->next; // переходим на новый элемент
+        iter_element = iter_element->next; // РїРµСЂРµС…РѕРґРёРј РЅР° РЅРѕРІС‹Р№ СЌР»РµРјРµРЅС‚
     }
 
-    //first_element = first_element->next; // убераем заглавное звено
+    //first_element = first_element->next; // СѓР±РµСЂР°РµРј Р·Р°РіР»Р°РІРЅРѕРµ Р·РІРµРЅРѕ
 
-    int number_to_delete; // Переменная для хранения числа для удаления
+    int number_to_delete; // РџРµСЂРµРјРµРЅРЅР°СЏ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ С‡РёСЃР»Р° РґР»СЏ СѓРґР°Р»РµРЅРёСЏ
 
-    print_list(first_element); // Выводим список в консоль
+    print_list(first_element); // Р’С‹РІРѕРґРёРј СЃРїРёСЃРѕРє РІ РєРѕРЅСЃРѕР»СЊ
     cout << "Number to delete?" << endl;
-    cin >> number_to_delete; // Спрашиваем число
-    int delete_result = delete_not_last_elements(first_element, number_to_delete); // Удаляем число из списка
-    if (delete_result == VALUE_NOT_FOUND) { // Если число не найдено
+    cin >> number_to_delete; // РЎРїСЂР°С€РёРІР°РµРј С‡РёСЃР»Рѕ
+    int delete_result = delete_not_last_elements(first_element, number_to_delete); // РЈРґР°Р»СЏРµРј С‡РёСЃР»Рѕ РёР· СЃРїРёСЃРєР°
+    if (delete_result == VALUE_NOT_FOUND) { // Р•СЃР»Рё С‡РёСЃР»Рѕ РЅРµ РЅР°Р№РґРµРЅРѕ
         cout << "Value '" << number_to_delete << "' not found!" << endl;
-    } else if (delete_result == DELETE_FAILED) { // Если элементы не были удалены
+    } else if (delete_result == DELETE_FAILED) { // Р•СЃР»Рё СЌР»РµРјРµРЅС‚С‹ РЅРµ Р±С‹Р»Рё СѓРґР°Р»РµРЅС‹
         cout << "Deleted not executed, because it's unique value" << endl;
-        print_list(first_element);// Выводим список в консоль
+        print_list(first_element);// Р’С‹РІРѕРґРёРј СЃРїРёСЃРѕРє РІ РєРѕРЅСЃРѕР»СЊ
     } else {
         cout << "Delete success" << endl;
-        print_list(first_element);// Выводим список в консоль
+        print_list(first_element);// Р’С‹РІРѕРґРёРј СЃРїРёСЃРѕРє РІ РєРѕРЅСЃРѕР»СЊ
     }
 
     return 0;
