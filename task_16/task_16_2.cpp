@@ -20,22 +20,24 @@ struct ListElement { // Структура для элемента списка
 };
 
 void print_list(ListElement *first_element) { //Функция вывода списка на экран
-    cout << "List elements:" << endl;
+    cout << "Line: ";
     ListElement *iter_element = first_element; // Создаем указатель и выделяем под данные память
     do {
-        cout << "| " << iter_element->value << endl; // Выводим на экран элемент
+        cout << iter_element->value; // Выводим на экран элемент
         iter_element = iter_element->next; //Переходим на след элмент
     } while (iter_element != first_element); //ПОка не дойдем до первого элемента
+    cout << endl;
 }
 
 void reverse_print_list(ListElement *first_element) { //Функция вывода списка на экран в обратном порядке
-    cout << "Reversed list elements:" << endl;
+    cout << "Reversed line: ";
     ListElement *last_element = first_element->previous; //Получаем указатель на последний элемент
     ListElement *iter_element = last_element; // Создаем указатель и выделяем под данные память
     do {
-        cout << "| " << iter_element->value << endl; // Выводим на экран элемент
+        cout << iter_element->value; // Выводим на экран элемент
         iter_element = iter_element->previous; //Переходим на пред элемент
     } while (iter_element != last_element); //ПОка не дойдем до последнего элемента
+    cout << endl;
 }
 
 bool file_is_empty(ifstream &file) { // Проверка файла на пустоту

@@ -19,12 +19,13 @@ struct ListElement { // Структура для элемента списка
 };
 
 void print_list(ListElement *first_element) { //Функция вывода списка на экран
-    cout << "List elements:" << endl;
+    cout << "Line: ";
     ListElement *iter_element = first_element; // Создаем указатель и выделяем под данные память
     while (iter_element != NULL) { //ПОка не кончится список
-        cout << "| " << iter_element->value << endl; // Выводим на экран элемент
+        cout << iter_element->value; // Выводим на экран элемент
         iter_element = iter_element->next; //Переходим на след элмент
     }
+    cout << endl;
 }
 
 void reverse_recursion_print_list(ListElement *element) { // Рекурсивный вывод списка в обратном порядке
@@ -34,12 +35,13 @@ void reverse_recursion_print_list(ListElement *element) { // Рекурсивн�
 
     reverse_recursion_print_list(element->next); // Вызываем эту же функцию
 
-    cout << "| " << element->value << endl; // Печатаем элемент
+    cout << element->value; // Выводим на экран элемент
 }
 
 void reverse_print_list(ListElement *first_element) { // Просто функция обертка для reverse_recursion_print_list
-    cout << "Reverse list:" << endl;
+    cout << "Reversed line: ";
     reverse_recursion_print_list(first_element);
+    cout << endl;
 }
 
 bool file_is_empty(ifstream &file) { // Проверка файла на пустоту
