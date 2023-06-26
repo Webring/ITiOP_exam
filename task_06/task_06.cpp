@@ -8,7 +8,7 @@
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 6/numbers.txt" // Имя входного файла
+#define INPUT_FILE_PATH "../task_06/numbers.txt" // Имя входного файла
 #define DELETE_FAILED 0 // костанта состояния для удаления элемента
 #define VALUE_NOT_FOUND -1 // костанта состояния для удаления элемента
 

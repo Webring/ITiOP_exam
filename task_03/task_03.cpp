@@ -1,15 +1,14 @@
-
 /*
- * Task 1:
+ * Task 3:
  * В текстовом файле дана последовательность чисел.
- * Написать подпрограмму, которая меняет местами первый и последний элементы двунаправленного циклического списка.
- * Используя эту подпрограмму, преобразовать заданную последовательность
- * */
+ * Написать подпрограмму, которая находит среднее арифметическое неотрицательных элементов двунаправленного списка.
+ * Используя эту подпрограмму, вычислить среднее арифметическое заданной последовательности.
+ */
 
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 1/numbers.txt" // Имя входного файла
+#define INPUT_FILE_PATH "../task_03/numbers.txt" // Имя входного файла
 
 using namespace std; //Подключаем пространство имен
 
@@ -23,7 +22,7 @@ void print_list(ListElement *first_element) { //Функция вывода сп
     cout << "List elements:" << endl;
     ListElement *iter_element = first_element; // Создаем указатель и выделяем под данные память
     int total_amount = 0; // Количество элементов в списке
-    while (iter_element != first_element or total_amount == 0) { //Пока не дойдем до первого элемента
+    while (iter_element != NULL) { //Пока не дойдем до первого элемента
         cout << "| " << iter_element->value << endl; // Выводим на экран элемент
         total_amount++; // Увеличиваем число элментов на один
         iter_element = iter_element->next; //Переходим на след элмент
@@ -31,21 +30,27 @@ void print_list(ListElement *first_element) { //Функция вывода сп
     cout << "+amount: " << total_amount << endl; //Печатаем количество
 }
 
-void swap_ends_elements(ListElement *first_element) { // Функция смены конечных элементов двусвязном зацикленном списке
-    cout << "Swap ends of list" << endl;
-    ListElement *last_element = first_element->previous; // Создаем указатель и выделяем под данные память
+float find_average_number(ListElement *first_element) { // Функция для подсчета средне арифметического числа
+    ListElement *iter_element = first_element; // Создаем указатель на первый элемент
+    int number_of_numbers = 0; // Количество чисел
+    int numbers_sum = 0; // Сумма чисел
 
-    //swap(a, b) меняет значения в переменных a и b местами
+    while (iter_element != NULL) { //Пока текущий элемент не равен нулю
+        if (iter_element->value >= 0) { // Если число неотрицательно
+            numbers_sum += iter_element->value; // К сумме добавляем само число
+            number_of_numbers += 1; // К количеству добавляем 1
+        }
+        iter_element = iter_element->next; // Переходим на следующий элемент
+    }
 
-    // Решение 1 (более простое): swap(first_element->value, last_element->value); // меняем местами значения перменных
+    if (number_of_numbers == 0) { // Если количество равно 0
+        return -1; // Возвращаем -1
+    }
 
-    // Решение 2 (вроде именно оно и нужно): Крутим вертим указателями)))
-    swap(first_element->next, last_element->next); // Меняем местами указатели на следующие элементы
-    swap(first_element->previous, last_element->previous); // Меняем местами указатели на предыдущие элементы
-    swap(*first_element, *last_element); // Меняем расположение объектов в памяти
+    return (numbers_sum + .0) / number_of_numbers; // Возвращаем средне арифметическое число
 }
 
-bool file_is_empty(ifstream &file) {
+bool file_is_empty(ifstream &file) { // Проверка файла на пустоту
     return file.peek() == ifstream::traits_type::eof(); // Если следующий доступный для чтения символ равен символу конца файла
 }
 
@@ -76,13 +81,16 @@ int main() {
 
     first_element = first_element->next; // Убираем заглавное звено
 
-    first_element->previous = iter_element; // Зацикливаем двусвязный список по предыдущему элементу
-    iter_element->next = first_element; // Зацикливаем двусвязный список по следущему элементу
-
     print_list(first_element); // Выводим список
 
-    swap_ends_elements(first_element); // Меняем элементы
+    float average_number = find_average_number(first_element); // Вызываем функцию подсчета средне арифметического
 
-    print_list(first_element); // Выводим список
+    if (average_number > 0) { // Если число получилось найти
+        cout << "Average number is " << average_number << endl;
+    } else { // Если не получилось вычислить число (Количество чисел = 0)
+        cout << "ERROR! Average number can't be calculated!" << endl;
+    }
+
+
     return 0;
 }

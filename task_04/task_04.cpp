@@ -1,20 +1,19 @@
 /*
- * Task 3:
+ * Task 4:
  * В текстовом файле дана последовательность чисел.
- * Написать подпрограмму, которая находит среднее арифметическое неотрицательных элементов двунаправленного списка.
- * Используя эту подпрограмму, вычислить среднее арифметическое заданной последовательности.
- */
+ * Написать рекурсивную подпрограмму, которая вычисляет среднее арифметическое элементов непустого однонаправленного списка.
+ * Используя эту подпрограмму. вычислить среднее арифметическое чисел заданной последовательности.
+*/
 
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 3/numbers.txt" // Имя входного файла
+#define INPUT_FILE_PATH "../task_04/numbers.txt" // Имя входного файла
 
 using namespace std; //Подключаем пространство имен
 
 struct ListElement { // Структура для элемента списка
     int value; // значение
-    ListElement *previous = NULL; // указатель на предыдущий элемент
     ListElement *next = NULL; // указатель на следующий элемент
 };
 
@@ -30,24 +29,12 @@ void print_list(ListElement *first_element) { //Функция вывода сп
     cout << "+amount: " << total_amount << endl; //Печатаем количество
 }
 
-float find_average_number(ListElement *first_element) { // Функция для подсчета средне арифметического числа
-    ListElement *iter_element = first_element; // Создаем указатель на первый элемент
-    int number_of_numbers = 0; // Количество чисел
-    int numbers_sum = 0; // Сумма чисел
-
-    while (iter_element != NULL) { //Пока текущий элемент не равен нулю
-        if (iter_element->value >= 0) { // Если число неотрицательно
-            numbers_sum += iter_element->value; // К сумме добавляем само число
-            number_of_numbers += 1; // К количеству добавляем 1
-        }
-        iter_element = iter_element->next; // Переходим на следующий элемент
+float find_average_number_recursion(ListElement *element, int sum = 0, int quantity = 0) { // Функция для подсчета средне арифметического числа
+    if (element == NULL) { // Базовый случай рекурсии (Если список кончился)
+        return (sum + .0) / quantity; // Возвращаем средне арифметическое число
     }
 
-    if (number_of_numbers == 0) { // Если количество равно 0
-        return -1; // Возвращаем -1
-    }
-
-    return (numbers_sum + .0) / number_of_numbers; // Возвращаем средне арифметическое число
+    return find_average_number_recursion(element->next, sum + element->value, quantity + 1); // Вызываем эту функцию
 }
 
 bool file_is_empty(ifstream &file) { // Проверка файла на пустоту
@@ -74,7 +61,6 @@ int main() {
         ListElement *new_element = new ListElement; // создаем указатель на новый элемент и  выделяем под него память
         input_file >> new_element->value; // Читаем из файла новое значение и записываем ее в структуру
         iter_element->next = new_element; // добавляем ссылку на следующий элемент
-        new_element->previous = iter_element;
 
         iter_element = iter_element->next; // переходим на новый элемент
     }
@@ -83,14 +69,9 @@ int main() {
 
     print_list(first_element); // Выводим список
 
-    float average_number = find_average_number(first_element); // Вызываем функцию подсчета средне арифметического
+    float average_number = find_average_number_recursion(first_element); // Вызываем функцию подсчета средне арифметического
 
-    if (average_number > 0) { // Если число получилось найти
-        cout << "Average number is " << average_number << endl;
-    } else { // Если не получилось вычислить число (Количество чисел = 0)
-        cout << "ERROR! Average number can't be calculated!" << endl;
-    }
-
+    cout << "Average number is " << average_number << endl; // Выводим средне арифметическое число
 
     return 0;
 }

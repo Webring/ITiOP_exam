@@ -1,14 +1,14 @@
 /*
- * Task 7:
+ * Task 5:
  * В текстовом файле дана последовательность чисел.
- * Написать рекурсивную подпрограмму, которая печатает в обратном порядке элементы непустого однонаправленного списка.
- * Используя эту подпрограмму, напечатать заданную последовательность в обратном порядке.
+ * Написать рекурсивную подпрограмму, которая находит максимальный элемент непустого однонаправленного списка.
+ * Используя эту подпрограмму, удалить из заданной последовательности все элементы со значениями меньше максимального.
 */
 
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 7/numbers.txt" // Имя входного файла
+#define INPUT_FILE_PATH "../task_05/numbers.txt" // Имя входного файла
 
 using namespace std; //Подключаем пространство имен
 
@@ -29,14 +29,28 @@ void print_list(ListElement *first_element) { //Функция вывода сп
     cout << "+amount: " << total_amount << endl; //Печатаем количество
 }
 
-void reverse_recursion_print_list(ListElement *element) { // Рекурсивный вывод списка в обратном порядке
-    if (element == nullptr) { // Базовый случай рекурсии (Если список кончился)
-        return;
+int find_maximum_value(ListElement *element, int maximum_value = 0, bool is_first = true) { // Функция для подсчета средне арифметического числа
+    if (element == NULL) { // Базовый случай рекурсии (Если список кончился)
+        return maximum_value; // Возвращаем максимальный элемент
     }
 
-    reverse_recursion_print_list(element->next); // Вызываем эту же функцию
+    return find_maximum_value(element->next, max(maximum_value, element->value), false); // Вызываем эту функцию
+}
 
-    cout << "| " << element->value << endl; // Печатаем элемент
+void delete_no_maximum_numbers(ListElement *first_element) { // Функция удаления не максимальных элементов
+    int maximum_number = find_maximum_value(first_element->next); //Ищем максимальное число
+    cout << "Maximum number is " << maximum_number << endl;
+    ListElement *iter_element = first_element; // создаем указатель на перебираемый элемент равен указателю на первый элемент
+    ListElement *temp_element; // указатель на удаляемый элемнт
+    while (iter_element->next != NULL) {//ПОка не кончится список
+        if (iter_element->next->value != maximum_number) { //Если не максимальный элемент
+            temp_element = iter_element->next; //Запоминаем элемент
+            iter_element->next = iter_element->next->next; // Меняем связи в списке
+            delete temp_element; // Удаляем элемент
+        } else {
+            iter_element = iter_element->next; // переходим на следующий элемент
+        }
+    }
 }
 
 bool file_is_empty(ifstream &file) { // Проверка файла на пустоту
@@ -68,12 +82,11 @@ int main() {
         iter_element = iter_element->next; // переходим на новый элемент
     }
 
-    first_element = first_element->next; // Удаляем заглавное звено
+    print_list(first_element->next); // Выводим список
 
-    print_list(first_element); // Выводим список
+    delete_no_maximum_numbers(first_element); // Удаляем не максимальные элементы
 
-    cout << "Reversed List:" << endl;
-    reverse_recursion_print_list(first_element); // Удаляем не максимальные элементы
+    print_list(first_element->next); // Выводим список
 
     return 0;
 }

@@ -9,7 +9,7 @@
 #include <iostream>
 #include "fstream"
 
-#define INPUT_FILE_PATH "../task 10/numbers.txt" // Имя входного файла
+#define INPUT_FILE_PATH "../task_10/numbers.txt" // Имя входного файла
 
 using namespace std; //Подключаем пространство имен
 
