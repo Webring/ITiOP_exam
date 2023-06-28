@@ -68,6 +68,10 @@ int delete_not_last_elements(ListElement *first_element, int value) { // Фун�
     return number_of_deleted_values; // ВОзвращаем количество удаленых элментов
 }
 
+bool file_is_empty(ifstream &file) {
+    return file.peek() == ifstream::traits_type::eof(); // Если следующий доступный для чтения символ равен символу конца файла
+}
+
 int main() {
     ifstream input_file(INPUT_FILE_PATH); // открываем файл для чтения
 
@@ -76,7 +80,7 @@ int main() {
         return 0; // Завершаем работу программы
     }
 
-    if (input_file.peek() == ifstream::traits_type::eof()) { // Проверяем файл на пустоту
+    if (file_is_empty(input_file)) { // Проверяем файл на пустоту
         cout << "file is empty" << endl; //Выводим сообщение об ошибке
         return 0; // Завершаем работу программы
     }
