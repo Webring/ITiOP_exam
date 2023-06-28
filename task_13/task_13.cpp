@@ -63,7 +63,7 @@ int main() {
         root = add_word_to_tree(root, word);
     }
 
-    inorder(root, output_file); //Используя концевой обход выводим в алфавитном порядке
+    inorder(root, output_file); //Используя обратный обход выводим в алфавитном порядке
 
     return 0;
 }

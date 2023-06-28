@@ -20,6 +20,6 @@ struct PriorityQueue {
 
     int get();
 
-    void print();
+    void print_like_list();
 };
 

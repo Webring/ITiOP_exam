@@ -4,13 +4,13 @@ bool PriorityQueue::is_empty() {
     return main->next == nullptr;
 }
 
-void PriorityQueue::print() {
+void PriorityQueue::print_like_list() {
     if (is_empty()) {
         cout << "Queue is empty" << endl;
         return;
     }
 
-    cout << "Queue:" << endl;
+    cout << "Queue (printed by list method):" << endl;
     Element *iter_element = main->next;
     while (iter_element != nullptr) {
         cout << " V\t" << iter_element->key << "\tV " << endl;

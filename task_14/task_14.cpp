@@ -41,7 +41,11 @@ int main() {
         priority_queue.add(number);
     }
 
-    priority_queue.print();
+    //priority_queue.print();
+
+    while (not priority_queue.is_empty()){
+        cout << priority_queue.get() << endl;
+    }
 
     return 0;
 }

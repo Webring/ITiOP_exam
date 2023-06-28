@@ -1,0 +1,6 @@
+Stol 12.1
+Kod 10.1
+Pol 111.1
+Isud 9.1
+Goa 8.1
+Bia 3.1

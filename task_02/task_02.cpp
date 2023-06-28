@@ -69,7 +69,7 @@ int main() {
         return 0; // Завершаем работу программы
     }
 
-    ListElement *first_element_of_first_sequence, *first_element_of_second_sequence, *iter_element;
+    ListElement *first_element_of_first_sequence, *first_element_of_second_sequence, *iter_element, *end_of_first_sequence;
     first_element_of_second_sequence = new ListElement;
     first_element_of_first_sequence = iter_element = new ListElement; // Выделяем под них память
 
@@ -81,6 +81,7 @@ int main() {
         if (symbol == ' ') {
             first_element_of_first_sequence = first_element_of_first_sequence->next;
             iter_element->next = first_element_of_first_sequence;
+            end_of_first_sequence = iter_element;
             iter_element = first_element_of_second_sequence;
         } else {
             iter_element->next = new_element; // добавляем элемент в список
@@ -105,6 +106,9 @@ int main() {
         cout << "Line 1 is sub sequence line 2" << endl;
     } else {
         cout << "Line 1 is NOT sub sequence line 2" << endl;
+        iter_element->next = first_element_of_first_sequence;
+        end_of_first_sequence->next = first_element_of_second_sequence;
+        print_list(first_element_of_second_sequence, 3);
     }
 
     return 0;

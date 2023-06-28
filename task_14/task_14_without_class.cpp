@@ -20,13 +20,13 @@ bool is_empty_queue(Element *main) {
     return main->next == nullptr;
 }
 
-void print(Element *main) {
+void print_like_list(Element *main) {
     if (is_empty_queue(main)) {
         cout << "Queue is empty" << endl;
         return;
     }
 
-    cout << "Queue:" << endl;
+    cout << "Queue (printed by list method):" << endl;
     Element *iter_element = main->next;
     while (iter_element != nullptr) {
         cout << " V\t" << iter_element->key << "\tV " << endl;
@@ -94,7 +94,10 @@ int main() {
         add(main, number);
     }
 
-    print(main);
+    while (not is_empty_queue(main)) {
+        cout << get(main) << endl;
+    }
+    //print_like_list(main);
 
     return 0;
 }
